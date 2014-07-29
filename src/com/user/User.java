@@ -106,7 +106,9 @@ public class User{
 	public void setAddress(String address) {
 		this.address = address;
 	}
-	
+	public int getID(){
+		return this.ID;
+	}
 	
 	
 }

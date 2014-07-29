@@ -53,5 +53,8 @@ public class Member{
 		this.user = user;
 	}
 	
+	public int getID(){
+		return this.ID;
+	}
 	
 }

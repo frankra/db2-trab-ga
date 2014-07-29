@@ -26,8 +26,9 @@ public class MemberDao {
 	public Member retrieve(int id){
 		return em.find(Member.class, id);
 	}
+
 	
-	public List<Member> getUserMemberOf(int userID){
+	public List<Member> getMemberByUserID(int userID){
 		TypedQuery<Member> query = em.createQuery("SELECT m FROM Member m WHERE m.user.ID = :userID", Member.class)
 				.setParameter("userID", userID);
 		

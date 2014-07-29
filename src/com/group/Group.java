@@ -29,6 +29,8 @@ public class Group {
 	@OneToMany(fetch=FetchType.LAZY, mappedBy="group")
 	private Set<Member> groupMembers;
 	
+	@OneToMany(fetch=FetchType.LAZY, mappedBy="group")
+	private Set<Member> sharedLists;
 	
 	public Group() {
 		super();
@@ -61,6 +63,9 @@ public class Group {
 		this.owner = owner;
 	}
 
+	public int getID(){
+		return this.ID;
+	}
 
 	public Set<Member> getGroupMembers() {
 		return groupMembers;

@@ -15,13 +15,13 @@ public class MemberController {
 	@Autowired
 	private MemberDao memberDao;
 	
-	@RequestMapping("/userMemberOf")
+	@RequestMapping("/getMemberByUserID")
 	public void createUser(HttpServletResponse response,
 			@RequestParam("userID") int userID){
 		
 		try{
 			PrintWriter out = response.getWriter();
-			out.print(memberDao.getUserMemberOf(userID));
+			out.print(memberDao.getMemberByUserID(userID));
 		}catch(Exception e){
 			e.printStackTrace();
 		}		
