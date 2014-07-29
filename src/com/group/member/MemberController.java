@@ -1,4 +1,4 @@
-package com.group;
+package com.group.member;
 
 import java.io.PrintWriter;
 
@@ -9,34 +9,31 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-
 @Controller
-public class GroupController {
+public class MemberController {
+	
 	@Autowired
-	private GroupDao groupDao;
+	private MemberDao memberDao;
 	
-	@RequestMapping("/createGroup")
-	public void createGroup(HttpServletResponse response,
-			@RequestParam("name") String groupName){
+	@RequestMapping("/userMemberOf")
+	public void createUser(HttpServletResponse response,
+			@RequestParam("userID") int userID){
+		
 		try{
 			PrintWriter out = response.getWriter();
-			Group group = new Group(groupName);
-			groupDao.persist(group);
-			out.print("Group "+groupName+" Created!");
+			out.print(memberDao.getUserMemberOf(userID));
 		}catch(Exception e){
 			e.printStackTrace();
 		}		
 	}
 	
-	@RequestMapping("/groupCount")
-	public void getGroupCount(HttpServletResponse response){
+	@RequestMapping("/memberCount")
+	public void getUserCount(HttpServletResponse response){
 		try{
 			PrintWriter out = response.getWriter();
-			out.print(groupDao.getGroupCount());
+			out.print(memberDao.getMemberCount());
 		}catch(Exception e){
 			e.printStackTrace();
 		}		
 	}
-	
-	
 }

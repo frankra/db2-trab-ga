@@ -7,6 +7,8 @@ import javax.persistence.TypedQuery;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.user.User;
+
 @Component
 public class GroupDao {
 	
@@ -16,6 +18,11 @@ public class GroupDao {
 	@Transactional 
 	public void persist(Group group){
 		em.persist(group);
+	}
+	
+	@Transactional
+	public Group retrieve(int id){
+		return em.find(Group.class, id);
 	}
 	
 	public int getGroupCount(){

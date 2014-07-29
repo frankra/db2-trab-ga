@@ -29,7 +29,7 @@ public class PersistenceJPAConfig {
 
 		LocalContainerEntityManagerFactoryBean em = new LocalContainerEntityManagerFactoryBean();
 		em.setDataSource(ds);
-		em.setPackagesToScan(new String[] { "com.group","com.group.user","com.list","com.list.item" });
+		em.setPackagesToScan(new String[] { "com.user","com.group","com.group.member","com.list","com.list.item" });
 
 		JpaVendorAdapter vendorAdapter = new EclipseLinkJpaVendorAdapter();
 		em.setJpaVendorAdapter(vendorAdapter);

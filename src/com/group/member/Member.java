@@ -1,35 +1,40 @@
 package com.group.member;
 
-import java.util.UUID;
-
-import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
+import javax.persistence.Table;
 
 import com.group.Group;
 import com.user.User;
 
 @Entity
-public class Member extends User{
+@Table(name="MEMBER")
+public class Member{
 	@Id
-	private String memberUUID;
-	@OneToOne(fetch = FetchType.LAZY, mappedBy="groupUUID")
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private int ID;
+	@ManyToOne
+	@JoinColumn(nullable=false)
 	private Group group;
-	@OneToOne(fetch = FetchType.LAZY, mappedBy="userUUID")
+	@OneToOne
+	@JoinColumn(name="USER_ID", nullable=false)
 	private User user;
 	
 	public Member(Group group, User user) {
 		super();
-		this.memberUUID = UUID.randomUUID().toString();				
+						
 		this.group = group;
 		this.user = user;
 	}
 	
 	public Member(){
 		super();
-		this.memberUUID = UUID.randomUUID().toString();	
+			
 	}
 
 	public Group getGroup() {

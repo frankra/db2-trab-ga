@@ -19,6 +19,11 @@ public class UserDao {
 		em.persist(user);
 	}
 	
+	@Transactional
+	public User retrieve(int id){
+		return em.find(User.class, id);
+	}
+	
 	public int getUserCount(){
 		TypedQuery<User> query = em.createQuery("SELECT u FROM User u ORDER BY u.login", User.class);
 		

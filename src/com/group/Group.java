@@ -1,39 +1,46 @@
 package com.group;
 
-import java.util.List;
-import java.util.UUID;
+import java.util.Set;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.Table;
 
 import com.group.member.Member;
 import com.user.User;
 
 @Entity
+@Table(name="MEMBER_GROUP")
 public class Group {
 	@Id
-	private String groupUUID;
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private int ID;
+	@Column
 	private String name;
 	
-	@OneToOne(fetch = FetchType.LAZY, mappedBy="OWNER_ID")
+	@OneToOne
 	private Member owner;
-
-	@OneToMany(fetch = FetchType.LAZY, mappedBy="GROUP_ID")
-	private List<Member> groupMembers;
+	@OneToMany(fetch=FetchType.LAZY, mappedBy="group")
+	private Set<Member> groupMembers;
 	
 	
 	public Group() {
 		super();
-		this.groupUUID = UUID.randomUUID().toString();
+	}
+	
+	public Group(String name) {
+		super();
+		this.name = name;
 	}
 	
 	public Group(String name, Member owner) {
 		super();
-		this.groupUUID = UUID.randomUUID().toString();
 		this.name = name;
 		this.owner = owner;
 	}
@@ -46,12 +53,25 @@ public class Group {
 		this.name = name;
 	}
 
-	public User getOwner() {
+	public Member getOwner() {
 		return owner;
 	}
 
 	public void setOwner(Member owner) {
 		this.owner = owner;
+	}
+
+
+	public Set<Member> getGroupMembers() {
+		return groupMembers;
+	}
+	
+	public void addGroupMember(Member member){
+		this.groupMembers.add(member);
+	}
+	
+	public void removeGroupMember(Member member){
+		this.groupMembers.remove(member);
 	}
 
 	

@@ -1,23 +1,26 @@
 package com.user;
 
-import java.util.UUID;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Table;
 
 @Entity
-public class User {
+@Table(name="USER")
+public class User{
 	
 	@Id
-	private String userUUID;
-	@Column
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private int ID;
+	@Column(nullable=false, unique=true)
 	private String login;
-	@Column
+	@Column(nullable=false)
 	private String password;
 	@Column
 	private String email;
-	@Column
+	@Column(nullable=false)
 	private String firstName;
 	@Column
 	private String lastName;
@@ -32,15 +35,19 @@ public class User {
 	
 	
 	public User(){
-		this.userUUID = UUID.randomUUID().toString();
+		
 	};
 	
 	public User(String firstName, String lastName, String email,String login, String password){
-		this.userUUID = UUID.randomUUID().toString();
-		
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.email = email;
+		this.login = login;
+		this.password = password;
+	};
+	
+	public User(String firstName,String login, String password){
+		this.firstName = firstName;
 		this.login = login;
 		this.password = password;
 	};
