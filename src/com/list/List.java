@@ -31,7 +31,6 @@ public class List {
 	private Group group;
 	
 	@OneToOne
-	@JoinColumn(nullable=false)
 	private Member member;
 	
 	@OneToMany(fetch=FetchType.LAZY, mappedBy="list")

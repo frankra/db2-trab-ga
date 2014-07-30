@@ -34,7 +34,6 @@ public class Item {
 	private List list;
 	
 	@OneToOne
-	@JoinColumn(nullable=false)
 	private Member owner;
 	
 	
