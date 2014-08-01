@@ -1,5 +1,7 @@
 package com.user;
 
+import java.util.List;
+
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
@@ -25,9 +27,16 @@ public class UserDao {
 	}
 	
 	public int getUserCount(){
-		TypedQuery<User> query = em.createQuery("SELECT u FROM User u ORDER BY u.login", User.class);
+		TypedQuery<User> query = em.createQuery("SELECT u FROM User u", User.class);
 		
 		return query.getResultList().size();
 	}
+	
+	public List<User> getAllUsers(){
+		TypedQuery<User> query = em.createQuery("SELECT u FROM User u", User.class);
+		
+		return query.getResultList();
+		
+	};
 
 }
