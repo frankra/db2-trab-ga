@@ -21,7 +21,7 @@
 	<!--<context:component-scan base-package="com.core" /> -->
 
 	<mvc:annotation-driven />
-	<mvc:resources mapping="/UI/**" location="/UI/" />
+	<mvc:resources mapping="/App/**" location="/App/" />
 
 
 	<tx:annotation-driven />
