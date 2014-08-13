@@ -1,5 +1,10 @@
 package com.group.member;
 
+import java.sql.Timestamp;
+import java.util.Calendar;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -18,25 +23,49 @@ public class Member{
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int ID;
-	@ManyToOne
+	@ManyToOne(cascade=CascadeType.PERSIST)
 	@JoinColumn(nullable=false)
 	private Group group;
 	@OneToOne
 	@JoinColumn(name="USER_ID", nullable=false)
 	private User user;
 	
+	/**/
+	@Column 
+	private Timestamp lastChangedOn;
+	@Column
+	private Timestamp createdOn;
+	/**/
+	
 	public Member(Group group, User user) {
 		super();
 						
 		this.group = group;
 		this.user = user;
+		this.createdOn = new Timestamp(Calendar.getInstance().getTime().getTime());
+		this.lastChangedOn = this.createdOn;
 	}
 	
 	public Member(){
 		super();
+		this.createdOn = new Timestamp(Calendar.getInstance().getTime().getTime());
+		this.lastChangedOn = this.createdOn;
 			
 	}
 
+	public Timestamp getLastChangedOn() {
+		return lastChangedOn;
+	}
+
+	public void setLastChangedOn(Timestamp lastChangedOn) {
+		this.lastChangedOn = lastChangedOn;
+	}
+
+	public Timestamp getCreatedOn() {
+		return createdOn;
+	}
+
+	
 	public Group getGroup() {
 		return group;
 	}

@@ -1,11 +1,17 @@
 package com.user;
 
+import java.sql.Timestamp;
+import java.util.Calendar;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
+
+import com.group.member.Member;
 
 @Entity
 @Table(name="USER")
@@ -33,9 +39,16 @@ public class User{
 	@Column
 	private String address;
 	
+	/**/
+	@Column 
+	private Timestamp lastChangedOn;
+	@Column
+	private Timestamp createdOn;
+	/**/
 	
 	public User(){
-		
+		this.createdOn = new Timestamp(Calendar.getInstance().getTime().getTime());
+		this.lastChangedOn = this.createdOn;
 	};
 	
 	public User(String firstName, String lastName, String email,String login, String password){
@@ -44,6 +57,8 @@ public class User{
 		this.email = email;
 		this.login = login;
 		this.password = password;
+		this.createdOn = new Timestamp(Calendar.getInstance().getTime().getTime());
+		this.lastChangedOn = this.createdOn;
 	};
 	
 	public User(String firstName,String login, String password){
@@ -108,6 +123,18 @@ public class User{
 	}
 	public int getID(){
 		return this.ID;
+	}
+
+	public Timestamp getLastChangedOn() {
+		return lastChangedOn;
+	}
+
+	public void setLastChangedOn(Timestamp lastChangedOn) {
+		this.lastChangedOn = lastChangedOn;
+	}
+
+	public Timestamp getCreatedOn() {
+		return createdOn;
 	}
 	
 	

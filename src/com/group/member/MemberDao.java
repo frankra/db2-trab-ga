@@ -1,5 +1,7 @@
 package com.group.member;
 
+import java.sql.Timestamp;
+import java.util.Calendar;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -19,6 +21,7 @@ public class MemberDao {
 	
 	@Transactional 
 	public void persist(Member member){
+		member.setLastChangedOn(new Timestamp(Calendar.getInstance().getTime().getTime()));
 		em.persist(member);
 	}
 	

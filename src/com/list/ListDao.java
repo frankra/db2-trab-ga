@@ -1,5 +1,8 @@
 package com.list;
 
+import java.sql.Timestamp;
+import java.util.Calendar;
+
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
@@ -15,6 +18,7 @@ public class ListDao {
 	
 	@Transactional 
 	public void persist(List list){
+		list.setLastChangedOn(new Timestamp(Calendar.getInstance().getTime().getTime()));
 		em.persist(list);
 	}
 	

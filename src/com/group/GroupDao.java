@@ -1,5 +1,8 @@
 package com.group;
 
+import java.sql.Timestamp;
+import java.util.Calendar;
+
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
@@ -17,6 +20,7 @@ public class GroupDao {
 	
 	@Transactional 
 	public void persist(Group group){
+		group.setLastChangedOn(new Timestamp(Calendar.getInstance().getTime().getTime()));
 		em.persist(group);
 	}
 	
@@ -30,5 +34,6 @@ public class GroupDao {
 		
 		return query.getResultList().size();
 	}
+
 
 }

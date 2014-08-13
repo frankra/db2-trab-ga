@@ -1,5 +1,7 @@
 package com.user;
 
+import java.sql.Timestamp;
+import java.util.Calendar;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -18,6 +20,7 @@ public class UserDao {
 	
 	@Transactional 
 	public void persist(User user){
+		user.setLastChangedOn(new Timestamp(Calendar.getInstance().getTime().getTime()));
 		em.persist(user);
 	}
 	
