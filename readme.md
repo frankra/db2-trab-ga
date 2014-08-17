@@ -2,7 +2,7 @@
 												
 
 
------------------------------------------HomeGroup Project.
+-----------------------------------------HomeGroup Project. (Frank@CodingDonuts)
 
 
 Idea: Create Shared lists with shared tasks among members of a closed group.
@@ -47,6 +47,10 @@ Technical information:
 			2.2.a TDD*
 			2.2.b BDD*
 
+		2.3. Documentation:
+
+			2.3.a. JSDoc/Javadocs (Comments on code)
+
 
 	3. Infrastructure:
 
@@ -69,3 +73,11 @@ Technical information:
 
 		TODO: Find an easy and smart way of 'deploying' the front-end files to the back-end package. Maybe Manven or Grunt could do the job.
 
+
+	4. Entities and Relationships:
+
+		USER has [0..n] MEMBERS as Members of Groups - MEMBER has USER_ID as Foreign Key
+
+		MEMBER_GROUP has [0..n] MEMBERS as Group Members - MEMBER has GROUP_ID as Foreign Key
+
+		
