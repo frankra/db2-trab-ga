@@ -76,8 +76,16 @@ Technical information:
 
 	4. Entities and Relationships:
 
+		USER as User - User is the Unique entity to maintain a user(person) information.
+		MEMBER as Member - Member is a 'relationship instance' of a User to something.
+		MEMBER_GROUP as GroupMember or Group - Group is a collection of Members.
+		LIST as List - List is a simple list of tasks assigned to a Group, which contains one Member as Owner and several Items.
+		ITEM as List Item or Item - Item is a task which is assigned to a List
+		
+
+
 		USER has [0..n] MEMBERS as Members of Groups - MEMBER has USER_ID as Foreign Key
 
 		MEMBER_GROUP has [0..n] MEMBERS as Group Members - MEMBER has GROUP_ID as Foreign Key
 
-		
+

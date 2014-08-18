@@ -30,7 +30,7 @@ public class Item {
 	@Column
 	private Date due;
 	
-	@ManyToOne(cascade=CascadeType.PERSIST)
+	@ManyToOne
 	@JoinColumn(nullable=false)
 	private List list;
 	

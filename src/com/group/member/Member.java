@@ -23,7 +23,7 @@ public class Member{
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int ID;
-	@ManyToOne(cascade=CascadeType.PERSIST)
+	@ManyToOne
 	@JoinColumn(nullable=false)
 	private Group group;
 	@OneToOne

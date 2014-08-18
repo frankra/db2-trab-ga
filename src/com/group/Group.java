@@ -27,10 +27,10 @@ public class Group {
 	private String name;
 	@OneToOne
 	private Member owner;
-	@OneToMany(fetch=FetchType.LAZY, mappedBy="group", cascade=CascadeType.PERSIST)
+	@OneToMany(fetch=FetchType.LAZY, mappedBy="group")
 	private Set<Member> groupMembers;
 	
-	@OneToMany(fetch=FetchType.LAZY, mappedBy="group", cascade=CascadeType.PERSIST)
+	@OneToMany(fetch=FetchType.LAZY, mappedBy="group")
 	private Set<Member> sharedLists;
 	
 	/**/
