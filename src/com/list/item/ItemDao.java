@@ -10,6 +10,8 @@ import javax.persistence.TypedQuery;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.user.User;
+
 @Component
 public class ItemDao {
 	
@@ -17,14 +19,37 @@ public class ItemDao {
 	
 	@Transactional 
 	public void persist(Item item){
-		item.setLastChangedOn(new Timestamp(Calendar.getInstance().getTime().getTime()));
-		em.persist(item);
+		Item retrievedItem = this.retrieve(item.getID());
+		if(retrievedItem != null){
+			em.merge(item);
+		}else{
+			item.setLastChangedOn(new Timestamp(Calendar.getInstance().getTime().getTime()));
+			em.persist(item);
+		}
 	}
 	
 	@Transactional
 	public Item retrieve(int id){
 		return em.find(Item.class, id);
 	}
+	
+	
+	@Transactional
+	public void update(Item item){
+		em.merge(item);
+	}
+	
+	@Transactional
+	public Item delete(int id){
+		Item retrievedItem = this.retrieve(id);
+		if(retrievedItem != null){
+			em.remove(retrievedItem);
+		}
+		
+		return retrievedItem;
+		
+	}
+	
 	
 	public int getItemCount(){
 		TypedQuery<Item> query = em.createQuery("SELECT i FROM Item", Item.class);

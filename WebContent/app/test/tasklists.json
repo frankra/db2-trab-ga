@@ -1,0 +1,42 @@
+[
+  {
+    
+    "uid":1,
+    "title":"title1",
+    "items": [{
+          "uid": 1,
+          "list_id":1,
+           "text" : "Do something that has a very very long description, and this description should be entirely visible on the UI, otherwise it won`t fit the requirement.",
+          "name" : "Foo Bar",
+          "isdone": true
+        },
+        {
+          "uid": 2,
+          "list_id":1,
+         "text" : "Buy Bananas",
+          "name" : "Market",
+          "isdone": true
+        }
+    ]
+  },
+  {
+    "uid":2,
+    "title":"title2",
+    "items": [{
+          "uid": 3,
+          "list_id":2,
+           "text" : "this task belongs to list two",
+          "name" : "Foo Bar",
+          "isdone": true
+        },
+        {
+          "uid": 4,
+          "list_id":2,
+         "text" : "Buy Mangos",
+          "name" : "Market",
+          "isdone": true
+        }
+    ]
+  }
+  
+]

@@ -13,28 +13,38 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
+import javax.persistence.Table;
+
+import org.codehaus.jackson.annotate.JsonBackReference;
+import org.codehaus.jackson.annotate.JsonManagedReference;
 
 import com.group.member.Member;
 import com.list.List;
 
 @Entity
+@Table(name="listitem")
 public class Item {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int ID;
 	@Column
-	private String name;
+	private String text;
 	@Column
 	private boolean done;
+	
+
 	@Column
 	private Date due;
 	
-	@ManyToOne
-	@JoinColumn(nullable=false)
+	@ManyToOne(cascade = CascadeType.PERSIST)
+	@JoinColumn
+	@JsonBackReference
 	private List list;
 	
 	@OneToOne
+	@JoinColumn
+	@JsonBackReference
 	private Member owner;
 	
 	/**/
@@ -47,9 +57,9 @@ public class Item {
 	@OneToOne
 	private Member createdBy;
 	/**/
-	public Item(String name, Date due, List list, Member owner) {
+	public Item(String text, Date due, List list, Member owner) {
 		super();
-		this.name = name;
+		this.text = text;
 		this.due = due;
 		this.list = list;
 		this.owner = owner;
@@ -61,7 +71,7 @@ public class Item {
 	
 	public Item(String name, List list, Member owner) {
 		super();
-		this.name = name;
+		this.text = name;
 		this.list = list;
 		this.owner = owner;
 		this.createdOn = new Timestamp(Calendar.getInstance().getTime().getTime());
@@ -75,12 +85,12 @@ public class Item {
 		this.lastChangedOn = this.createdOn;
 	}
 
-	public String getName() {
-		return name;
+	public String getText() {
+		return text;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setText(String text) {
+		this.text = text;
 	}
 
 	public boolean isDone() {
@@ -94,7 +104,15 @@ public class Item {
 	public Date getDue() {
 		return due;
 	}
+	
+	public int getID() {
+		return ID;
+	}
 
+	public void setID(int iD) {
+		ID = iD;
+	}
+	
 	public void setDue(Date due) {
 		this.due = due;
 	}

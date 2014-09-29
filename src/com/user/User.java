@@ -1,5 +1,6 @@
 package com.user;
 
+import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.Calendar;
 
@@ -8,15 +9,15 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
-import com.group.member.Member;
-
 @Entity
-@Table(name="USER")
-public class User{
+@Table(name="user")
+public class User implements Serializable{
 	
+	private static final long serialVersionUID = 1L;
+	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int ID;
@@ -38,6 +39,7 @@ public class User{
 	private String city;
 	@Column
 	private String address;
+	
 	
 	/**/
 	@Column 
@@ -121,6 +123,10 @@ public class User{
 	public void setAddress(String address) {
 		this.address = address;
 	}
+	public void setID(int iD) {
+		ID = iD;
+	}
+
 	public int getID(){
 		return this.ID;
 	}
@@ -132,7 +138,11 @@ public class User{
 	public void setLastChangedOn(Timestamp lastChangedOn) {
 		this.lastChangedOn = lastChangedOn;
 	}
-
+	
+	public void setCreatedOn(Timestamp createdOn) {
+		this.createdOn = createdOn;
+	}
+	
 	public Timestamp getCreatedOn() {
 		return createdOn;
 	}

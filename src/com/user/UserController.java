@@ -1,13 +1,12 @@
 package com.user;
 
-import java.io.PrintWriter;
 import java.util.List;
-
-import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -17,37 +16,34 @@ public class UserController {
 	@Autowired
 	private UserDao userDao;
 	
-	@RequestMapping("/createUser")
-	public void createUser(HttpServletResponse response,
-			@RequestParam("fname") String firstName,
-			@RequestParam("lname") String lastName,
-			@RequestParam("email") String email,
-			@RequestParam("login") String login,
-			@RequestParam("pwd") String pwd){
+	
+	@RequestMapping(value="createUser",method = RequestMethod.POST)
+	public @ResponseBody User createUser(@RequestBody User user){
+		userDao.persist(user);
 		
-		try{
-			PrintWriter out = response.getWriter();
-			User user = new User(firstName,lastName,email,login,pwd);
-			userDao.persist(user);
-			
-			out.print("User "+firstName+" Created!");
-		}catch(Exception e){
-			e.printStackTrace();
-		}		
+		return user;
 	}
 	
-	@RequestMapping("/userCount")
-	public void getUserCount(HttpServletResponse response){
-		try{
-			PrintWriter out = response.getWriter();
-			out.print(userDao.getUserCount());
-		}catch(Exception e){
-			e.printStackTrace();
-		}		
+	@RequestMapping("/retrieveUser")
+	public @ResponseBody User retrieveUser(@RequestParam("id") int id){
+		return userDao.retrieve(id);
 	}
 	
-	@RequestMapping("/getAllUsers")
-	public @ResponseBody List<User> getAllUsers(HttpServletResponse response){
+	@RequestMapping("/updateUser")
+	public @ResponseBody User updateUser(@RequestBody User user){
+		return userDao.persist(user);
+	}
+	
+	@RequestMapping("/deleteUser")
+	public @ResponseBody User deleteUser(@RequestParam("id") int id){
+		return userDao.delete(id);
+	}
+	
+	
+	@RequestMapping("/getUserList")
+	public @ResponseBody List<User> getUserList(){
 		return userDao.getAllUsers();
-	}
+	};
+	
+	
 }

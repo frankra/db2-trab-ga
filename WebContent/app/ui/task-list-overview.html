@@ -1,0 +1,59 @@
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../services/task-item-service.html">
+<link rel="import" href="../bower_components/paper-icon-button/paper-icon-button.html">
+<link rel="import" href="../bower_components/core-icons/core-icons.html">
+<link rel="import" href="../bower_components/core-toolbar/core-toolbar.html">
+<link rel="import" href="../bower_components/core-overlay/core-overlay.html">
+<link rel="import" href="task-list.html">
+
+<polymer-element name="task-list-overview" attributes="tasklist,opened">
+    <template>
+        <style>
+            :host {
+                -webkit-user-select: none;
+                -moz-user-select: none;
+                overflow: hidden;
+                background: #E5E5E5;
+                width: 100%;
+                height: 100%;
+                min-height: 600px;
+                /*top: 0px;
+                left: 0px;*/
+            }
+            
+            .add-btn {
+                width: 100%;
+                background-color: white;
+            }
+            
+            .task-list {
+                margin: 10px;
+                width: 400px;
+            }
+        </style>
+       
+        <div vertical layout center>
+            <div class="task-list">
+	            <core-toolbar class="task-list-header">
+	                <paper-input value='{{tasklist.name}}'></paper-input>
+	            </core-toolbar>
+	            <task-list taskitems="{{tasklist.items}}"></task-list>
+	            <div vertical layout>
+		            <div layout  class="add-btn" horizontal center>
+		                <paper-icon-button class="add-btn" on-click="{{onAddNewTask}}" icon="add" class="new-row-button"></paper-icon-button>
+		            </div>
+	            </div>
+            </div>
+        </div>
+    </template>
+    <script>
+        Polymer('task-list-overview', {
+            onAddNewTask: function(event, detail, sender) {
+                this.tasklist.items.push({
+                    "isdone": false,
+                    "text": ""
+                });
+            },
+           
+        });
+    </script>

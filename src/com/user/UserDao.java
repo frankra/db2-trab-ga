@@ -19,9 +19,16 @@ public class UserDao {
 	
 	
 	@Transactional 
-	public void persist(User user){
-		user.setLastChangedOn(new Timestamp(Calendar.getInstance().getTime().getTime()));
-		em.persist(user);
+	public User persist(User user){
+		User retrievedUser = this.retrieve(user.getID());
+		if(retrievedUser != null){
+			em.merge(user);
+		}else{
+			user.setLastChangedOn(new Timestamp(Calendar.getInstance().getTime().getTime()));
+			em.persist(user);
+		}
+		
+		return user;
 	}
 	
 	@Transactional
@@ -29,12 +36,25 @@ public class UserDao {
 		return em.find(User.class, id);
 	}
 	
+	@Transactional
+	public User delete(int id){
+		User retrievedUser = this.retrieve(id);
+		if(retrievedUser != null){
+			em.remove(retrievedUser);
+		}
+		
+		return retrievedUser;
+		
+	}
+	
+	
+	@Transactional
 	public int getUserCount(){
 		TypedQuery<User> query = em.createQuery("SELECT u FROM User u", User.class);
 		
 		return query.getResultList().size();
 	}
-	
+	@Transactional
 	public List<User> getAllUsers(){
 		TypedQuery<User> query = em.createQuery("SELECT u FROM User u", User.class);
 		

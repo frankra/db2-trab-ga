@@ -15,23 +15,29 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import org.codehaus.jackson.annotate.JsonManagedReference;
+
 import com.group.member.Member;
+import com.list.List;
 
 @Entity
-@Table(name="MEMBER_GROUP")
+@Table(name="hgroup")
 public class Group {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int ID;
 	@Column
 	private String name;
-	@OneToOne
+	@OneToOne(fetch=FetchType.LAZY)
 	private Member owner;
-	@OneToMany(fetch=FetchType.LAZY, mappedBy="group")
+	
+	@OneToMany(fetch=FetchType.LAZY, mappedBy="group",cascade=CascadeType.ALL)
+	@JsonManagedReference
 	private Set<Member> groupMembers;
 	
-	@OneToMany(fetch=FetchType.LAZY, mappedBy="group")
-	private Set<Member> sharedLists;
+	@OneToMany(fetch=FetchType.LAZY, mappedBy="group",cascade=CascadeType.ALL)
+	@JsonManagedReference
+	private Set<List> groupLists;
 	
 	/**/
 	@Column 
@@ -46,6 +52,7 @@ public class Group {
 	
 	public Group() {
 		super();
+		this.createdOn = new Timestamp(Calendar.getInstance().getTime().getTime());
 	}
 	
 	public Group(String name) {
@@ -82,10 +89,14 @@ public class Group {
 		this.lastChangedBy = lastChangedBy;
 	}
 
-	public Set<Member> getSharedLists() {
-		return sharedLists;
+	public Set<List> getGroupLists() {
+		return groupLists;
 	}
-
+	
+	public void addGroupList(com.list.List list){
+		this.groupLists.add(list);
+	}
+	
 	public Timestamp getCreatedOn() {
 		return createdOn;
 	}
@@ -103,6 +114,10 @@ public class Group {
 
 	public Member getOwner() {
 		return owner;
+	}
+
+	public void setID(int iD) {
+		ID = iD;
 	}
 
 	public void setOwner(Member owner) {

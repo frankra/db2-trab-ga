@@ -1,0 +1,70 @@
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../services/task-item-service.html">
+<link rel="import" href="../bower_components/paper-icon-button/paper-icon-button.html">
+<link rel="import" href="../bower_components/core-icons/core-icons.html">
+<link rel="import" href="../bower_components/core-toolbar/core-toolbar.html">
+
+<link rel="import" href="task-list.html">
+
+<polymer-element name="task-list-quickview" attributes="tasklist">
+    <template>
+        <style>
+            :host {
+                display: block;
+                width: 100%;
+            }
+            .task-list-header {
+                margin-bottom: 3px;
+            }
+            .task-list-toolbar {
+                margin-bottom: 3px;
+                padding: 0px;
+                
+            }
+            .new-row-button {
+                background-color: white;
+                width: 100%;
+            }
+        </style>
+
+        <div flex auto vertical>
+        	<core-toolbar class="task-list-toolbar">
+        		<paper-icon-button on-click="{{onOverview}}" icon="view-headline"></paper-icon-button>
+                <paper-icon-button on-click="{{onDeleteList}}" icon="delete"></paper-icon-button>
+            </core-toolbar>
+            <core-toolbar class="task-list-header">
+                <paper-input value='{{tasklist.name}}'></paper-input>
+            </core-toolbar>
+            <task-list taskitems="{{tasklist.items}}"></task-list>
+
+            <div layout horizontal center>
+                <paper-icon-button on-click="{{onAddNewTask}}" icon="add" class="new-row-button"></paper-icon-button>
+            </div>
+        </div>
+
+
+    </template>
+
+    <script>
+        Polymer({
+            handleDone: function(event, detail, sender) {
+                var taskitem = sender.templateInstance.model.taskitem;
+                // this.$.service.setDone(taskitem.uid, taskitem.favorite);
+            },
+            onAddNewTask: function(event, detail, sender) {
+                this.tasklist.items.push({
+                    "isdone": false,
+                    "text": ""
+                });
+            },
+            onDeleteList:function(event,detail,sender){
+            	this.fire('delete-list');
+            },
+            onOverview:function(event,detail,sender){
+            	this.fire('overview');
+            },
+
+
+        });
+    </script>
+</polymer-element>

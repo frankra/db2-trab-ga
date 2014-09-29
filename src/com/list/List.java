@@ -12,9 +12,14 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.Table;
+
+import org.codehaus.jackson.annotate.JsonBackReference;
+import org.codehaus.jackson.annotate.JsonManagedReference;
 
 import com.group.Group;
 import com.group.member.Member;
@@ -22,6 +27,7 @@ import com.list.item.Item;
 
 
 @Entity
+@Table(name="list")
 public class List {
 	
 	@Id
@@ -31,12 +37,17 @@ public class List {
 	private String name;
 	
 	@ManyToOne
+	@JoinColumn
+	@JsonBackReference
 	private Group group;
 	
 	@OneToOne
-	private Member member;
+	@JoinColumn
+	@JsonBackReference
+	private Member owner;
 	
-	@OneToMany(fetch=FetchType.LAZY, mappedBy="list", cascade=CascadeType.PERSIST)
+	@OneToMany(fetch=FetchType.LAZY, mappedBy="list", cascade=CascadeType.ALL)
+	@JsonManagedReference
 	private Set<Item> items = new HashSet<Item>();
 	
 	/**/
@@ -54,7 +65,7 @@ public class List {
 		super();
 		this.name = name;
 		this.group = group;
-		this.member = member;
+		this.owner = member;
 		this.createdOn = new Timestamp(Calendar.getInstance().getTime().getTime());
 		this.createdBy = member;
 		this.lastChangedOn = this.createdOn;
@@ -76,11 +87,11 @@ public class List {
 	public void setName(String name) {
 		this.name = name;
 	}
-	public Member getMember() {
-		return member;
+	public Member getOwner() {
+		return owner;
 	}
-	public void setMember(Member member) {
-		this.member = member;
+	public void setOwner(Member member) {
+		this.owner = member;
 	}
 	public Timestamp getLastChangedOn() {
 		return lastChangedOn;
@@ -111,6 +122,10 @@ public class List {
 	}
 	public void addItem(Item item){
 		this.items.add(item);
+	}
+
+	public void setID(int iD) {
+		ID = iD;
 	}
 	
 	

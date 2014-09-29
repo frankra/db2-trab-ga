@@ -3,43 +3,44 @@ package com.group.member;
 import java.sql.Timestamp;
 import java.util.Calendar;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
+
+import org.codehaus.jackson.annotate.JsonBackReference;
 
 import com.group.Group;
 import com.user.User;
 
 @Entity
-@Table(name="MEMBER")
+@Table(name="member")
 public class Member{
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private int ID;
-	@ManyToOne
-	@JoinColumn(nullable=false)
-	private Group group;
-	@OneToOne
-	@JoinColumn(name="USER_ID", nullable=false)
-	private User user;
+		private int ID;
+	
+	@ManyToOne(fetch=FetchType.LAZY)
+	@JoinColumn(nullable = false)
+	@JsonBackReference
+		private Group group;
+	
+	@ManyToOne(fetch=FetchType.LAZY)
+	@JoinColumn(nullable = false)
+		private User user;
 	
 	/**/
 	@Column 
-	private Timestamp lastChangedOn;
+		private Timestamp lastChangedOn;
 	@Column
-	private Timestamp createdOn;
+		private Timestamp createdOn;
 	/**/
 	
 	public Member(Group group, User user) {
 		super();
-						
+		this.ID = this.fetchCompositeKey(group.getID(), user.getID());				
 		this.group = group;
 		this.user = user;
 		this.createdOn = new Timestamp(Calendar.getInstance().getTime().getTime());
@@ -84,6 +85,15 @@ public class Member{
 	
 	public int getID(){
 		return this.ID;
+	}
+	
+	private int fetchCompositeKey(int groupID,int userID){
+		int composedID = groupID+userID;
+		return composedID;
+	};
+
+	public void setID(int iD) {
+		ID = iD;
 	}
 	
 }

@@ -21,8 +21,14 @@ public class MemberDao {
 	
 	@Transactional 
 	public void persist(Member member){
-		member.setLastChangedOn(new Timestamp(Calendar.getInstance().getTime().getTime()));
-		em.persist(member);
+		Member retrievedMember = this.retrieve(member.getID());
+		if(retrievedMember != null){
+			em.merge(member);
+		}else{
+			member.setLastChangedOn(new Timestamp(Calendar.getInstance().getTime().getTime()));
+			em.persist(member);
+		}
+		
 	}
 	
 	@Transactional
@@ -30,6 +36,10 @@ public class MemberDao {
 		return em.find(Member.class, id);
 	}
 
+	@Transactional
+	public void update(Member member){
+		em.merge(member);
+	}
 	
 	public List<Member> getMemberByUserID(int userID){
 		TypedQuery<Member> query = em.createQuery("SELECT m FROM Member m WHERE m.user.ID = :userID", Member.class)

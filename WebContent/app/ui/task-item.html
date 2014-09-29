@@ -1,0 +1,48 @@
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../bower_components/paper-input/paper-input.html">
+<link rel="import" href="../bower_components/paper-checkbox/paper-checkbox.html">
+<polymer-element name="task-item" attributes="taskitem, index">
+    <template>
+        <style>
+            :host {
+                display: block;
+                position: relative;
+                background-color: white;
+                width: 100%;
+                height: 100%;
+
+            }
+            .task-item {
+            	height: 100%;
+            	padding: 10px;
+                
+            }
+            .task-text {
+              	margin: 5px;
+              	padding: 5px;
+            }
+            .task-btn {
+             
+            }
+        </style>
+        <div class="task-item" layout horizontal center >
+       	   <paper-checkbox class="task-btn" on-change='{{handleDone}}' checked='{{taskitem.done}}'></paper-checkbox>
+           <paper-input class="task-text" multiline value='{{taskitem.text}}'></paper-input>
+           <paper-icon-button class="small" on-click="{{onDeleteItem}}" icon="delete"></paper-icon-button>
+        </div>
+    </template>
+    <script>
+        Polymer('task-item', {
+            handleDone: function(event, detail, sender) {
+                var taskitem = sender.templateInstance.model.taskitem;
+                // this.$.service.setDone(taskitem.uid, taskitem.favorite);
+            },
+            onDeleteItem: function(event, detail, sender) {
+            	this.fire('delete-item');
+            }
+
+
+
+        });
+    </script>
+</polymer-element>

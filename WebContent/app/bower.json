@@ -1,0 +1,15 @@
+{
+  "name": "CodingDonuts",
+  "version": "0.0.0",
+  "private": true,
+  "dependencies": {
+    "angular": "1.2.x",
+    "angular-mocks": "~1.2.x",
+    "jquery": "1.10.2",
+    "bootstrap": "~3.1.1",
+    "angular-route": "~1.2.x",
+    "polymer": "Polymer/polymer#latest",
+    "core-elements": "Polymer/core-elements#latest",
+    "paper-elements": "Polymer/paper-elements#latest"
+  }
+}

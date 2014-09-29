@@ -1,12 +1,9 @@
 package tests;
 
-import java.io.PrintWriter;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
-
-import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -40,9 +37,14 @@ public class UserToGroupTest {
 	@Autowired
 	private ItemDao itemDao;
 	private List<Item> items = new ArrayList<Item>();
+
+	
+	public static void main(String a[]){
+		new UserToGroupTest().startTests();
+	}
 	
 	@RequestMapping("/startTests")
-	public void startTests(HttpServletResponse response){
+	public String startTests(){
 		Timestamp StartedOn = new Timestamp(Calendar.getInstance().getTime().getTime());
 		System.out.println("Starting Test.");
 		createTestUsers();
@@ -51,10 +53,11 @@ public class UserToGroupTest {
 		System.out.println("Groups Created.");
 		assignUsersToGroup();
 		System.out.println("Users assigned to Groups.");
-		
 		createTestLists();
-		System.out.println("Lists and Items created.");
-		
+		System.out.println("Lists Created.");
+		addItemsToList();
+		System.out.println("Items added to list.");
+	
 		System.out.println("Starting Relationship Test.");
 		for(String str :testUserToGroupRelationship()){
 			System.out.println(str);
@@ -65,10 +68,10 @@ public class UserToGroupTest {
 		System.out.println("Test finished.");
 		
 		try{
-			PrintWriter out = response.getWriter();
-			out.write("Test Passed! Executed in: "+time);
+			return "Test Passed! Executed in: "+time;
 		}catch(Exception e){
 			e.printStackTrace();
+			return "err";
 		}
 		
 	}
@@ -77,7 +80,7 @@ public class UserToGroupTest {
 	private void createTestUsers(){
 		User user;
 		for(int i=0 ; i<10; i++){
-			String name = "name"+i;
+			String name = "testUser"+i;
 			String login = "user"+i;
 			String pwd = "pwd"+i;
 			
@@ -90,9 +93,7 @@ public class UserToGroupTest {
 	private void createTestGroups(){
 		Group group;
 		for(int i=0 ; i<5; i++){
-			String name = "name"+i;
-			
-			
+			String name = "testGroup"+i;
 			group = new Group(name);
 			groups.add(group);
 			groupDao.persist(group);
@@ -103,45 +104,55 @@ public class UserToGroupTest {
 		Member member;
 		member = new Member(groups.get(0),users.get(0));
 		members.add(member);
-		memberDao.persist(member);
-		
+		groups.get(0).addGroupMember(member);
+		groupDao.persist(groups.get(0));
+
 		member = new Member(groups.get(1),users.get(0));
 		members.add(member);
-		memberDao.persist(member);
+		groups.get(0).addGroupMember(member);
+		groupDao.persist(groups.get(1));
 		
 		member = new Member(groups.get(2),users.get(0));
 		members.add(member);
-		memberDao.persist(member);
-		
+		groups.get(0).addGroupMember(member);
+		groupDao.persist(groups.get(2));
+
 		member = new Member(groups.get(0),users.get(1));
 		members.add(member);
-		memberDao.persist(member);
+		groups.get(0).addGroupMember(member);
+		groupDao.persist(groups.get(0));
 		
 		member = new Member(groups.get(0),users.get(2));
 		members.add(member);
-		memberDao.persist(member);
+		groups.get(0).addGroupMember(member);
+		groupDao.persist(groups.get(0));
 		
 		member = new Member(groups.get(0),users.get(3));
 		members.add(member);
-		memberDao.persist(member);
+		groups.get(0).addGroupMember(member);
+		groupDao.persist(groups.get(0));
+
+		
 	};
 	
-	public void createTestLists(){
+	public com.list.List createTestLists(){
 		com.list.List list;
 		
-		list = new com.list.List("To-dos",groups.get(0),members.get(5));
-		list = this.addItemsToList(list, list.getMember());
+		list = new com.list.List("To-dos",groups.get(0),members.get(0));
+		groups.get(0).addGroupList(list);
+		groupDao.persist(groups.get(0));
 		
-		
-		listDao.persist(list);
-		
+		return list;
 		
 	};
 	
-	public com.list.List addItemsToList(com.list.List list, Member owner){
+	public void addItemsToList(){
+		List<com.list.List> groupLists = new ArrayList<com.list.List>(groupDao.retrieve(groups.get(0).getID()).getGroupLists());
+		com.list.List list = groupLists.get(0); 
 		Item item;
+		
 		for(int i=0 ; i<10;i++){
-			item = new Item("Item "+i,list,owner);
+			item = new Item("Item "+i,list,list.getOwner());
 			
 			if(i>5){
 				item.setDone(true);
@@ -149,7 +160,7 @@ public class UserToGroupTest {
 			
 			list.addItem(item);
 		}
-		return list;
+		listDao.persist(list);
 		
 	};
 	
