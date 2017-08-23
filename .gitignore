@@ -1,2 +1,6 @@
 /build
 /target
+.idea
+homegroup.iml
+.classpath
+.project
