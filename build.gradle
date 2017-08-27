@@ -5,7 +5,8 @@ repositories {
 }
 
 dependencies {
- compile group: 'org.springframework', name: 'spring-core', version: '5.0.0.M5'
+ compile group: 'org.springframework', name: 'spring-core', version: '5.0.0.M5',
+ compile group: 'org.springframework', name: 'spring-core', version: '5.0.0.M5',
 }
 
 
