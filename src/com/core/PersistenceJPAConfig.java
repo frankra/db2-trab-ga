@@ -54,10 +54,10 @@ public class PersistenceJPAConfig {
 	public DataSource dataSource() throws NamingException {
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
     
-        dataSource.setDriverClassName("com.mysql.jdbc.Driver");
-        dataSource.setUrl("jdbc:mysql://localhost:3306/homegroup");
-        dataSource.setUsername("root");
-        dataSource.setPassword("W3lcome2!");
+        dataSource.setDriverClassName("org.postgresql.Driver");
+        dataSource.setUrl("jdbc:postgresql://localhost:5432/postgres");
+        dataSource.setUsername("postgres");
+        dataSource.setPassword("postgres");
 
 		return dataSource;
 	}
