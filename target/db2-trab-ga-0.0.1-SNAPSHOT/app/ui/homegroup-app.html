@@ -1,0 +1,74 @@
+
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../services/task-item-service.html">
+<link rel="import" href="../bower_components/font-roboto/roboto.html">
+<link rel="import" href="../bower_components/core-header-panel/core-header-panel.html">
+<link rel="import" href="../bower_components/core-toolbar/core-toolbar.html">
+<link rel="import" href="../bower_components/paper-tabs/paper-tabs.html">
+<link rel="import" href="task-list.html">
+<link rel="import" href="list-container.html">
+
+<polymer-element name="homegroup-app" attributes="selectedPage">
+    <template>
+        <style>
+            :host {
+                margin: 0;
+                background-color: #E5E5E5;
+                font-family: 'RobotoDraft', sans-serif;
+                overflow: hidden;
+                height: 100%;
+                width: 100%;
+            }
+            core-header-panel {
+                height: 100%;
+                overflow: auto;
+                -webkit-overflow-scrolling: touch;
+            }
+            core-toolbar {
+                background: #03a9f4;
+                color: white;
+            }
+            #tabs {
+                width: 100%;
+                margin: 0;
+                -webkit-user-select: none;
+                -moz-user-select: none;
+                -ms-user-select: none;
+                user-select: none;
+            }
+            @media (min-width: 481px) {
+                #tabs {
+                    width: 200px;
+                }
+            }
+        </style>
+
+        <core-header-panel flex>
+            <core-toolbar>
+                <paper-tabs id="tabs" selected="home" self-end>
+                    <paper-tab on-tap="{{handleTransition}}" name="home">HOME</paper-tab>
+                    <paper-tab on-tap="{{handleTransition}}" name="groups">GROUPS</paper-tab>
+                </paper-tabs>
+            </core-toolbar>
+            <core-animated-pages id="pages" vertical layout selected="{{selectedPage}}" on-core-animated-pages-transition-end="{{transitionend}}" transitions="cross-fade-all hero-transition">
+                <section  name="home">
+                    <list-container  hero cross-fade hero-id="hero"></list-container>
+                </section>
+                <section name="groups">
+                    <div hero cross-fade hero-id="hero">haeuuhea</div>
+                </section>
+            </core-animated-pages>
+
+        </core-header-panel>
+        <div>
+    </template>
+    <script>
+        Polymer('homegroup-app', {
+            selectedPage: 'home',
+            handleTransition: function(event, detail, sender) {
+                var selectedPageName = event.target.getAttribute('name');
+                this.$.pages.selected = selectedPageName;
+            },
+
+        });
+    </script>

@@ -1,7 +1,1 @@
-/build
-/target
-.idea
-homegroup.iml
-.classpath
-.project
-.gradle
+.DS_Store
