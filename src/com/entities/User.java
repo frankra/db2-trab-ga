@@ -1,25 +1,15 @@
 package com.entities;
 
-import java.io.Serializable;
-import java.sql.Timestamp;
-import java.util.Calendar;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "user")
-public class User implements Serializable {
+public class User extends BaseEntity {
 
 	private static final long serialVersionUID = 1L;
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private int ID;
 	@Column(nullable = false, unique = true)
 	private String login;
 	@Column(nullable = false)
@@ -30,38 +20,23 @@ public class User implements Serializable {
 	private String firstName;
 	@Column
 	private String lastName;
-	@Column
-	private int age;
-	@Column
-	private String country;
-	@Column
-	private String city;
-	@Column
-	private String address;
 
-	/**/
-	@Column
-	private Timestamp lastChangedOn;
-	@Column
-	private Timestamp createdOn;
-	/**/
-
+	
 	public User() {
-		this.createdOn = new Timestamp(Calendar.getInstance().getTime().getTime());
-		this.lastChangedOn = this.createdOn;
+		super();
 	};
 
 	public User(String firstName, String lastName, String email, String login, String password) {
+		super();
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.email = email;
 		this.login = login;
 		this.password = password;
-		this.createdOn = new Timestamp(Calendar.getInstance().getTime().getTime());
-		this.lastChangedOn = this.createdOn;
 	};
 
 	public User(String firstName, String login, String password) {
+		super();
 		this.firstName = firstName;
 		this.login = login;
 		this.password = password;
@@ -105,62 +80,6 @@ public class User implements Serializable {
 
 	public void setLastName(String lastName) {
 		this.lastName = lastName;
-	}
-
-	public int getAge() {
-		return age;
-	}
-
-	public void setAge(int age) {
-		this.age = age;
-	}
-
-	public String getCountry() {
-		return country;
-	}
-
-	public void setCountry(String country) {
-		this.country = country;
-	}
-
-	public String getCity() {
-		return city;
-	}
-
-	public void setCity(String city) {
-		this.city = city;
-	}
-
-	public String getAddress() {
-		return address;
-	}
-
-	public void setAddress(String address) {
-		this.address = address;
-	}
-
-	public void setID(int iD) {
-		ID = iD;
-	}
-
-	public int getID() {
-		return this.ID;
-	}
-
-	public Timestamp getLastChangedOn() {
-		return lastChangedOn;
-	}
-
-	public void setLastChangedOn(Timestamp lastChangedOn) {
-		this.lastChangedOn = lastChangedOn;
-	}
-
-	public void setCreatedOn(Timestamp createdOn) {
-		this.createdOn = createdOn;
-	}
-
-	public Timestamp getCreatedOn() {
-		return createdOn;
 	}
 
 }
