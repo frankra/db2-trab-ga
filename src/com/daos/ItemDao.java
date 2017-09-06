@@ -15,47 +15,46 @@ import com.entities.User;
 
 @Component
 public class ItemDao {
-  
-  @PersistenceContext private EntityManager em;  
-  
-  @Transactional 
-  public void persist(Item item){
-    Item retrievedItem = this.retrieve(item.getID());
-    if(retrievedItem != null){
-      em.merge(item);
-    }else{
-      item.setLastChangedOn(new Timestamp(Calendar.getInstance().getTime().getTime()));
-      em.persist(item);
-    }
-  }
-  
-  @Transactional
-  public Item retrieve(int id){
-    return em.find(Item.class, id);
-  }
-  
-  
-  @Transactional
-  public void update(Item item){
-    em.merge(item);
-  }
-  
-  @Transactional
-  public Item delete(int id){
-    Item retrievedItem = this.retrieve(id);
-    if(retrievedItem != null){
-      em.remove(retrievedItem);
-    }
-    
-    return retrievedItem;
-    
-  }
-  
-  
-  public int getItemCount(){
-    TypedQuery<Item> query = em.createQuery("SELECT i FROM Item", Item.class);
-    
-    return query.getResultList().size();
-  }
+
+	@PersistenceContext
+	private EntityManager em;
+
+	@Transactional
+	public void persist(Item item) {
+		Item retrievedItem = this.retrieve(item.getID());
+		if (retrievedItem != null) {
+			em.merge(item);
+		} else {
+			item.setLastChangedOn(new Timestamp(Calendar.getInstance().getTime().getTime()));
+			em.persist(item);
+		}
+	}
+
+	@Transactional
+	public Item retrieve(int id) {
+		return em.find(Item.class, id);
+	}
+
+	@Transactional
+	public void update(Item item) {
+		em.merge(item);
+	}
+
+	@Transactional
+	public Item delete(int id) {
+		Item retrievedItem = this.retrieve(id);
+		if (retrievedItem != null) {
+			em.remove(retrievedItem);
+		}
+
+		return retrievedItem;
+
+	}
+
+	public int getItemCount() {
+		TypedQuery<Item> query = em.createQuery("SELECT i FROM Item", Item.class);
+
+		return query.getResultList().size();
+	}
 
 }

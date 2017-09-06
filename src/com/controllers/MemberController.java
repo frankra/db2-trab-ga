@@ -13,29 +13,28 @@ import com.daos.MemberDao;
 
 @Controller
 public class MemberController {
-  
-  @Autowired
-  private MemberDao memberDao;
-  
-  @RequestMapping("/getMemberByUserID")
-  public void createUser(HttpServletResponse response,
-      @RequestParam("userID") int userID){
-    
-    try{
-      PrintWriter out = response.getWriter();
-      out.print(memberDao.getMemberByUserID(userID));
-    }catch(Exception e){
-      e.printStackTrace();
-    }    
-  }
-  
-  @RequestMapping("/memberCount")
-  public void getUserCount(HttpServletResponse response){
-    try{
-      PrintWriter out = response.getWriter();
-      out.print(memberDao.getMemberCount());
-    }catch(Exception e){
-      e.printStackTrace();
-    }    
-  }
+
+	@Autowired
+	private MemberDao memberDao;
+
+	@RequestMapping("/getMemberByUserID")
+	public void createUser(HttpServletResponse response, @RequestParam("userID") int userID) {
+
+		try {
+			PrintWriter out = response.getWriter();
+			out.print(memberDao.getMemberByUserID(userID));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	@RequestMapping("/memberCount")
+	public void getUserCount(HttpServletResponse response) {
+		try {
+			PrintWriter out = response.getWriter();
+			out.print(memberDao.getMemberCount());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 }

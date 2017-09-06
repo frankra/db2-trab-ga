@@ -14,16 +14,11 @@
 
 	<context:annotation-config />
 	<context:component-scan base-package="com.core" />
-	<context:component-scan base-package="com.list" />
-	<context:component-scan base-package="com.group" />
-	<context:component-scan base-package="com.user" />
-	<context:component-scan base-package="tests" />
-	<!--<context:component-scan base-package="com.core" /> -->
+	<context:component-scan base-package="com.daos" />
+	<context:component-scan base-package="com.entities" />
+	<context:component-scan base-package="com.controllers" />
 
 	<mvc:annotation-driven />
-	<mvc:resources mapping="/app/**" location="/app/" />
-
-
 	<tx:annotation-driven />
 
 </beans>
