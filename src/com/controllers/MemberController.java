@@ -1,40 +1,17 @@
 package com.controllers;
 
-import java.io.PrintWriter;
-
-import javax.servlet.http.HttpServletResponse;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
-import com.daos.MemberDao;
+import com.entities.Member;
+import com.repositories.MemberRepository;
 
 @Controller
-public class MemberController {
-
+public class MemberController extends BaseController<Member, MemberRepository> {
+	
 	@Autowired
-	private MemberDao memberDao;
-
-	@RequestMapping("/getMemberByUserID")
-	public void createUser(HttpServletResponse response, @RequestParam("userID") int userID) {
-
-		try {
-			PrintWriter out = response.getWriter();
-			out.print(memberDao.getMemberByUserID(userID));
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+	public MemberController(MemberRepository repository) {
+		super(repository);
 	}
-
-	@RequestMapping("/memberCount")
-	public void getUserCount(HttpServletResponse response) {
-		try {
-			PrintWriter out = response.getWriter();
-			out.print(memberDao.getMemberCount());
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
+	
 }

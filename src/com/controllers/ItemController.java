@@ -1,29 +1,17 @@
 package com.controllers;
 
-import java.io.PrintWriter;
-
-import javax.servlet.http.HttpServletResponse;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
-import com.daos.ItemDao;
+import com.entities.Item;
+import com.repositories.ItemRepository;
 
 @Controller
-public class ItemController {
+public class ItemController extends BaseController<Item, ItemRepository> {
+	
 	@Autowired
-	private ItemDao itemDao;
-
-	@RequestMapping("/itemCount")
-	public void getGroupCount(HttpServletResponse response) {
-		try {
-			PrintWriter out = response.getWriter();
-			out.print(itemDao.getItemCount());
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+	public ItemController(ItemRepository repository) {
+		super(repository);
 	}
-
+	
 }
