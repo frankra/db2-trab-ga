@@ -1,20 +1,15 @@
 package com.controllers;
 
-import java.util.Collection;
-
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.entities.BaseEntity;
 import com.repositories.BaseRepository;
 
 @Controller
-public abstract class BaseController <E extends BaseEntity, Q extends BaseRepository<E>> {
+public abstract class BaseController<E extends BaseEntity, Q extends BaseRepository<E>> {
 
 	private Q repository;
-	
+
 	public BaseController(Q repository) {
 		this.repository = repository;
 	}
@@ -26,30 +21,33 @@ public abstract class BaseController <E extends BaseEntity, Q extends BaseReposi
 	public void setRepository(Q repository) {
 		this.repository = repository;
 	}
-	
 
-	@RequestMapping(method = RequestMethod.GET)
-	public @ResponseBody Collection<E> getAll(){
-		return repository.findAll();
-	}
-	
 	/*
-	@RequestMapping(value = "/", method = RequestMethod.GET)
-	public List<E> getAll(){
-		return repository.findAll();
-	}
-	@RequestMapping(value = "/:id", method = RequestMethod.GET)
-	public E findById(@RequestParam("id") int id){
-		return repository.findById(id);
-	}
-	
-	
-	public void deleteById(){}
-	
-	public E create(){}
-	
-	public E update(){}*/
-	
-	
-	
+	 * Refactor later on
+	 * 
+	 * @RequestMapping(method = RequestMethod.GET) public @ResponseBody
+	 * Collection<E> getAll(){ return repository.findAll(); }
+	 * 
+	 * 
+	 * @RequestMapping(value = "/{id}", method = RequestMethod.GET)
+	 * public @ResponseBody E findById(@PathVariable int id) { return
+	 * repository.findById(id); }
+	 * 
+	 * @RequestMapping(method = RequestMethod.POST)
+	 * 
+	 * @ResponseStatus(HttpStatus.CREATED) public @ResponseBody E
+	 * create(@RequestBody E instance) { return repository.persist(instance); }
+	 * 
+	 * @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+	 * 
+	 * @ResponseStatus(HttpStatus.OK) public @ResponseBody void delete(@PathVariable
+	 * int id) { repository.deleteById(id); }
+	 * 
+	 * @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
+	 * 
+	 * @ResponseStatus(HttpStatus.OK) public @ResponseBody E update(@PathVariable
+	 * int id, @RequestBody E instance) { return repository.updateById(id,
+	 * instance); }
+	 */
+
 }
