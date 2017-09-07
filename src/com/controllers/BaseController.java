@@ -1,11 +1,11 @@
 package com.controllers;
 
-import java.util.List;
+import java.util.Collection;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.entities.BaseEntity;
 import com.repositories.BaseRepository;
@@ -18,6 +18,22 @@ public abstract class BaseController <E extends BaseEntity, Q extends BaseReposi
 	public BaseController(Q repository) {
 		this.repository = repository;
 	}
+
+	public Q getRepository() {
+		return repository;
+	}
+
+	public void setRepository(Q repository) {
+		this.repository = repository;
+	}
+	
+
+	@RequestMapping(method = RequestMethod.GET)
+	public @ResponseBody Collection<E> getAll(){
+		return repository.findAll();
+	}
+	
+	/*
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public List<E> getAll(){
 		return repository.findAll();
@@ -26,12 +42,14 @@ public abstract class BaseController <E extends BaseEntity, Q extends BaseReposi
 	public E findById(@RequestParam("id") int id){
 		return repository.findById(id);
 	}
-	/*
+	
 	
 	public void deleteById(){}
 	
 	public E create(){}
 	
 	public E update(){}*/
+	
+	
 	
 }

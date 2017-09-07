@@ -8,6 +8,7 @@
 
 	<properties>
 		<org.springframework.version>4.3.10.RELEASE</org.springframework.version>
+		<jackson.version>1.9.13</jackson.version>
 	</properties>
 
 	<repositories>
@@ -27,6 +28,7 @@
 			<artifactId>spring-core</artifactId>
 			<version>${org.springframework.version}</version>
 		</dependency>
+
 		<!-- Expression Language (depends on spring-core) Define this if you use 
 			Spring Expression APIs (org.springframework.expression.*) -->
 		<dependency>
@@ -39,13 +41,6 @@
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-beans</artifactId>
-			<version>${org.springframework.version}</version>
-		</dependency>
-		<!-- Aspect Oriented Programming (AOP) Framework (depends on spring-core, 
-			spring-beans) Define this if you use Spring AOP APIs (org.springframework.aop.*) -->
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-aop</artifactId>
 			<version>${org.springframework.version}</version>
 		</dependency>
 		<!-- Application Context (depends on spring-core, spring-expression, spring-aop, 
@@ -86,14 +81,6 @@
 			<artifactId>spring-orm</artifactId>
 			<version>${org.springframework.version}</version>
 		</dependency>
-		<!-- Object-to-XML Mapping (OXM) abstraction and integration with JAXB, 
-			JiBX, Castor, XStream, and XML Beans. (depends on spring-core, spring-beans, 
-			spring-context) Define this if you need OXM (org.springframework.oxm.*) -->
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-oxm</artifactId>
-			<version>${org.springframework.version}</version>
-		</dependency>
 		<!-- Web application development utilities applicable to both Servlet and 
 			Portlet Environments (depends on spring-core, spring-beans, spring-context) 
 			Define this if you use Spring MVC, or wish to use Struts, JSF, or another 
@@ -119,21 +106,13 @@
 			<artifactId>spring-webmvc-portlet</artifactId>
 			<version>${org.springframework.version}</version>
 		</dependency>
-		<!-- Support for testing Spring applications with tools such as JUnit and 
-			TestNG This artifact is generally always defined with a 'test' scope for 
-			the integration testing framework and unit testing stubs -->
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-test</artifactId>
-			<version>${org.springframework.version}</version>
-			<scope>test</scope>
-		</dependency>
 
-		<!-- Jackson JSON Mapper -->
+
+		<!-- Jackson -->
 		<dependency>
 			<groupId>org.codehaus.jackson</groupId>
 			<artifactId>jackson-mapper-asl</artifactId>
-			<version>1.9.13</version>
+			<version>${jackson.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.json</groupId>
@@ -143,85 +122,51 @@
 		</dependency>
 
 		<dependency>
-		    <groupId>org.eclipse.persistence</groupId>
-		    <artifactId>org.eclipse.persistence.jpa</artifactId>
-		    <version>2.7.0</version>
+			<groupId>com.google.code.gson</groupId>
+			<artifactId>gson</artifactId>
+			<version>2.3</version>
 		</dependency>
 
-		<dependency>
-			<groupId>com.sun.xml.ws</groupId>
-			<artifactId>jaxws-rt</artifactId>
-			<version>2.2.7</version>
-			<scope>runtime</scope>
-		</dependency>
-		<dependency>
-			<groupId>commons-codec</groupId>
-			<artifactId>commons-codec</artifactId>
-			<version>1.7</version>
-			<scope>compile</scope>
-		</dependency>
-
-		<dependency>
-			<groupId>org.hibernate</groupId>
-			<artifactId>hibernate-validator</artifactId>
-			<version>5.1.0.Alpha1</version>
-		</dependency>
+		<!-- JavaEE APIs -->
 		<dependency>
 			<groupId>javax.servlet</groupId>
-			<artifactId>servlet-api</artifactId>
-			<version>2.5</version>
-			<scope>provided</scope>
+			<artifactId>javax.servlet-api</artifactId>
+			<version>3.0.1</version>
 		</dependency>
-		
+
 		<dependency>
-		    <groupId>org.postgresql</groupId>
-		    <artifactId>postgresql</artifactId>
-		    <version>42.1.4</version>
+			<groupId>org.eclipse.persistence</groupId>
+			<artifactId>eclipselink</artifactId>
+			<version>2.6.0</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.postgresql</groupId>
+			<artifactId>postgresql</artifactId>
+			<version>42.1.4</version>
 		</dependency>
 
 	</dependencies>
+
 	<build>
 		<sourceDirectory>src</sourceDirectory>
 		<plugins>
 			<plugin>
-				<artifactId>maven-compiler-plugin</artifactId>
-				<version>3.1</version>
-				<configuration>
-					<source>1.7</source>
-					<target>1.7</target>
-				</configuration>
-			</plugin>
-			<plugin>
 				<artifactId>maven-war-plugin</artifactId>
-				<version>2.3</version>
+				<version>2.4</version>
 				<configuration>
 					<warSourceDirectory>WebContent</warSourceDirectory>
 					<failOnMissingWebXml>false</failOnMissingWebXml>
 				</configuration>
 			</plugin>
 			<plugin>
-        <artifactId>maven-resources-plugin</artifactId>
-        <version>2.6</version>
-        <executions>
-          <execution>
-            <id>copy-resources</id>
-            <!-- here the phase you need -->
-            <phase>validate</phase>
-            <goals>
-              <goal>copy-resources</goal>
-            </goals>
-            <configuration>
-              <outputDirectory>${basedir}/target/extra-resources</outputDirectory>
-              <resources>          
-                <resource>
-                  <directory>src/non-packaged-resources</directory>
-                  <filtering>true</filtering>
-                </resource>
-              </resources>              
-            </configuration>            
-          </execution>
-        </executions>
-      </plugin>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.1</version>
+				<configuration>
+					<source>1.8</source>
+					<target>1.8</target>
+				</configuration>
+			</plugin>
 		</plugins>
 	</build>
 </project>

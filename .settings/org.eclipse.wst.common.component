@@ -3,7 +3,7 @@
         <wb-resource deploy-path="/" source-path="/target/m2e-wtp/web-resources"/>
         <wb-resource deploy-path="/" source-path="/WebContent" tag="defaultRootSource"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src"/>
-        <property name="java-output-path" value="/homegroup/build/classes"/>
         <property name="context-root" value="db2-trab-ga"/>
+        <property name="java-output-path" value="/db2-trab-ga/target/classes"/>
     </wb-module>
 </project-modules>

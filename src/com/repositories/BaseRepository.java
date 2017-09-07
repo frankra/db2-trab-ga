@@ -1,6 +1,6 @@
 package com.repositories;
 
-import java.util.List;
+import java.util.Collection;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
 import com.entities.BaseEntity;
 
 @Component
-public class BaseRepository<E extends BaseEntity> {
+public abstract class BaseRepository<E extends BaseEntity> {
 	@PersistenceContext
 	private EntityManager em;
 	
@@ -35,7 +35,7 @@ public class BaseRepository<E extends BaseEntity> {
 		return instance;
 	}
 	
-	public List<E> findAll() {
+	public Collection<E> findAll() {
 		TypedQuery<E> query = em.createQuery("SELECT x FROM " + this.clazz.getName() + " x", this.clazz);
 		
 		return query.getResultList();
