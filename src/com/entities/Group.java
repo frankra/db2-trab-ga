@@ -10,6 +10,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 
@@ -25,15 +26,17 @@ public class Group extends BaseEntity {
 	@Column
 	private String name;
 	@OneToOne(fetch = FetchType.LAZY)
+	@JsonIgnore
 	private Member owner;
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "group", cascade = CascadeType.ALL)
-	@JsonManagedReference
-	private Set<Member> groupMembers;
+	@JsonManagedReference	
+	private Set<Member> members;
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "group", cascade = CascadeType.ALL)
-	@JsonManagedReference
-	private Set<List> groupLists;
+	//@JsonManagedReference
+	@JsonIgnore
+	private Set<List> lists;
 
 	public Group() {
 		super();
@@ -50,12 +53,12 @@ public class Group extends BaseEntity {
 		this.owner = owner;
 	}
 
-	public Set<List> getGroupLists() {
-		return groupLists;
+	public Set<List> getLists() {
+		return lists;
 	}
 
-	public void addGroupList(com.entities.List list) {
-		this.groupLists.add(list);
+	public void addList(com.entities.List list) {
+		this.lists.add(list);
 	}
 	
 	public String getName() {
@@ -74,16 +77,16 @@ public class Group extends BaseEntity {
 		this.owner = owner;
 	}
 
-	public Set<Member> getGroupMembers() {
-		return groupMembers;
+	public Set<Member> getMembers() {
+		return members;
 	}
 
-	public void addGroupMember(Member member) {
-		this.groupMembers.add(member);
+	public void addMember(Member member) {
+		this.members.add(member);
 	}
 
-	public void removeGroupMember(Member member) {
-		this.groupMembers.remove(member);
+	public void removeMember(Member member) {
+		this.members.remove(member);
 	}
 
 }

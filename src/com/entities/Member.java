@@ -6,7 +6,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import org.codehaus.jackson.annotate.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "member")
@@ -19,17 +20,17 @@ public class Member extends BaseEntity {
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(nullable = false)
-	@JsonBackReference
+	@JsonIgnore
 	private Group group;
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(nullable = false)
+	@JsonBackReference
 	private User user;
 
 
 	public Member(Group group, User user) {
 		super();
-		this.setId(this.fetchCompositeKey(group.getId(), user.getId()));
 		this.group = group;
 		this.user = user;
 	
@@ -55,11 +56,6 @@ public class Member extends BaseEntity {
 	public void setUser(User user) {
 		this.user = user;
 	}
-
-	private int fetchCompositeKey(int groupID, int userID) {
-		int composedID = groupID + userID;
-		return composedID;
-	};
 
 
 }

@@ -47,7 +47,7 @@ public class DemoUtilsController {
 	@RequestMapping(value="/bootstrap", method=RequestMethod.GET)
 	@ResponseStatus(HttpStatus.OK)
 	public void bootstrap(){
-		this.cleanup();
+		//this.cleanup();
 		
 		//Create 3 users
 		//Create 2 groups
