@@ -4,6 +4,8 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonView;
+
 @Entity
 @Table(name = "appuser")
 public class User extends BaseEntity {
@@ -11,14 +13,18 @@ public class User extends BaseEntity {
 	private static final long serialVersionUID = 1L;
 
 	@Column(nullable = false, unique = true)
+	@JsonView(View.Summary.class)
 	private String login;
 	@Column(nullable = false)
 	private String password;
 	@Column
+	@JsonView(View.Summary.class)
 	private String email;
 	@Column(nullable = false)
+	@JsonView(View.Summary.class)
 	private String firstName;
 	@Column
+	@JsonView(View.Summary.class)
 	private String lastName;
 
 	

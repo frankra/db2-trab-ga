@@ -1,5 +1,6 @@
 package com.controllers;
 
+import java.util.Date;
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -11,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 import com.entities.Group;
+import com.entities.Item;
+import com.entities.List;
 import com.entities.Member;
 import com.entities.User;
 import com.repositories.GroupRepository;
@@ -72,6 +75,19 @@ public class DemoUtilsController {
 		memberRepository.persist(user3group1);
 		groupRepository.merge(group1);
 		
+		//List group1user1
+		List group1user1 = new List("Todo list Group1", group1, user1group1);
+		listRepository.persist(group1user1);
+		Item item = new Item("Item 1", new Date(), group1user1, user1group1);
+		itemRepository.merge(item);
+		group1user1.addItem(item);
+		item = new Item("Item 2", new Date(), group1user1, user1group1);
+		itemRepository.merge(item);
+		group1user1.addItem(item);
+		item = new Item("Item 3", new Date(), group1user1, user1group1);
+		itemRepository.merge(item);
+		group1user1.addItem(item);
+		
 		//Group2 = {User2, User3}
 		Member user2group2 = new Member(group2, user2);
 		Member user3group2 = new Member(group2,  (User) users[2]);
@@ -79,7 +95,18 @@ public class DemoUtilsController {
 		memberRepository.persist(user2group2);
 		memberRepository.persist(user3group2);
 		groupRepository.merge(group2);
-		
+
+		List group2user2 = new List("Todo list Group2", group2, user2group2);
+		listRepository.persist(group2user2);
+		item = new Item("Item 1", new Date(), group2user2, user2group2);
+		itemRepository.merge(item);
+		group2user2.addItem(item);
+		item = new Item("Item 2", new Date(), group2user2, user2group2);
+		itemRepository.merge(item);
+		group2user2.addItem(item);
+		item = new Item("Item 3", new Date(), group2user2, user2group2);
+		itemRepository.merge(item);
+		group2user2.addItem(item);
 		
 	}
 	
@@ -99,8 +126,5 @@ public class DemoUtilsController {
 		}
 		return collection;
 	}
-	
-	
-	
 	
 }

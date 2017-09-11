@@ -13,8 +13,9 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
-import org.codehaus.jackson.annotate.JsonBackReference;
-import org.codehaus.jackson.annotate.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonView;
 
 @Entity
 @Table(name = "list")
@@ -26,20 +27,23 @@ public class List extends BaseEntity {
 	private static final long serialVersionUID = 1L;
 
 	@Column
+	@JsonView(View.Summary.class)
 	private String name;
 
 	@ManyToOne
 	@JoinColumn
-	@JsonBackReference
+	@JsonView(View.Summary.class)
 	private Group group;
 
 	@OneToOne
 	@JoinColumn
-	@JsonBackReference
+	@JsonView(View.Summary.class)
+	@JsonIgnoreProperties({"group"})
 	private Member owner;
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "list", cascade = CascadeType.ALL)
 	@JsonManagedReference
+	@JsonView(View.Summary.class)
 	private Set<Item> items = new HashSet<Item>();
 
 	public List(String name, Group group, Member member) {

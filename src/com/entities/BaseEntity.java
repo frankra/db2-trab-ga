@@ -10,6 +10,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 
+import com.fasterxml.jackson.annotation.JsonView;
+
 @MappedSuperclass
 public abstract class BaseEntity implements Serializable {
 
@@ -17,11 +19,14 @@ public abstract class BaseEntity implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
+	@JsonView(View.Summary.class)
 	private int id;
 	
 	@Column
+	@JsonView(View.Summary.class)
 	private Timestamp updatedAt;
 	@Column
+	@JsonView(View.Summary.class)
 	private Timestamp createdAt;
 
 	public BaseEntity() {

@@ -10,8 +10,10 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonView;
 
 
 
@@ -26,15 +28,17 @@ public class Group extends BaseEntity {
 	@Column
 	private String name;
 	@OneToOne(fetch = FetchType.LAZY)
-	@JsonIgnore
+	@JsonView(View.Summary.class)
 	private Member owner;
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "group", cascade = CascadeType.ALL)
-	@JsonManagedReference	
+	@JsonView(View.Summary.class)
+	@JsonIgnoreProperties({"group"})
 	private Set<Member> members;
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "group", cascade = CascadeType.ALL)
 	@JsonManagedReference
+	@JsonBackReference
 	private Set<List> lists;
 
 	public Group() {

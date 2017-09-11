@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 import com.entities.Member;
+import com.entities.View;
+import com.fasterxml.jackson.annotation.JsonView;
 import com.repositories.MemberRepository;
 
 @Controller
@@ -27,11 +29,13 @@ public class MemberController extends BaseController<Member, MemberRepository> {
 	// Move to BaseController in the future
 
 	@RequestMapping(method = RequestMethod.GET)
+	@JsonView(View.SummaryList.class)
 	public @ResponseBody Collection<Member> getAll() {
 		return getRepository().findAll();
 	}
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
+	@JsonView(View.Summary.class)
 	public @ResponseBody Member findById(@PathVariable int id) {
 		return getRepository().findById(id);
 	}
