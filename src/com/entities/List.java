@@ -42,7 +42,6 @@ public class List extends BaseEntity {
 	private Member owner;
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "list", cascade = CascadeType.ALL)
-	@JsonManagedReference
 	@JsonView(View.Summary.class)
 	private Set<Item> items = new HashSet<Item>();
 

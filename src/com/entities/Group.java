@@ -37,8 +37,8 @@ public class Group extends BaseEntity {
 	private Set<Member> members;
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "group", cascade = CascadeType.ALL)
-	@JsonManagedReference
-	@JsonBackReference
+	@JsonView(View.Summary.class)
+	@JsonIgnoreProperties({"group"})
 	private Set<List> lists;
 
 	public Group() {
