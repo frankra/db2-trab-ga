@@ -34,8 +34,7 @@ public class Group extends BaseEntity {
 	private Set<Member> members;
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "group", cascade = CascadeType.ALL)
-	//@JsonManagedReference
-	@JsonIgnore
+	@JsonManagedReference
 	private Set<List> lists;
 
 	public Group() {
