@@ -1,6 +1,15 @@
 package com.controllers;
 
 import java.util.Date;
+
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.servlet.http.HttpServletResponse;
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBException;
+import javax.xml.bind.Marshaller;
+
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -11,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
+import com.core.XMLSchemaOutputResolver;
 import com.entities.Group;
 import com.entities.Item;
 import com.entities.List;
@@ -42,9 +52,39 @@ public class DemoUtilsController {
 	public void cleanup(){
 		itemRepository.deleteAll();
 		listRepository.deleteAll();
-		memberRepository.deleteAll();
 		groupRepository.deleteAll();
+		memberRepository.deleteAll();
 		userRepository.deleteAll();
+	}
+	
+	@RequestMapping(value="/findUser1", method=RequestMethod.GET)
+	@ResponseStatus(HttpStatus.OK)
+    public void marshall(HttpServletResponse response) throws JAXBException, IOException {
+		User user = userRepository.findById(1);
+		
+		JAXBContext context = JAXBContext.newInstance(User.class);
+		Marshaller marshaller = context.createMarshaller();
+		marshaller.marshal(user, response.getOutputStream());
+	}
+	
+	@RequestMapping(value="/generateUserSchema", method=RequestMethod.GET)
+	@ResponseStatus(HttpStatus.OK)
+	public void generateUserSchema(HttpServletResponse response) throws JAXBException, IOException {
+		response.getOutputStream().print(getSchema(User.class));
+	}
+	
+	@RequestMapping(value="/generateGroupSchema", method=RequestMethod.GET)
+	@ResponseStatus(HttpStatus.OK)
+	public void generateGroupSchema(HttpServletResponse response) throws JAXBException, IOException {
+		response.getOutputStream().print(getSchema(Group.class));
+	}
+	
+	private String getSchema(Class clazz) throws JAXBException, IOException {
+		JAXBContext context = JAXBContext.newInstance(clazz);
+		XMLSchemaOutputResolver xmlsor = new XMLSchemaOutputResolver();
+		context.generateSchema(xmlsor);
+		return xmlsor.getSchema();
+		
 	}
 	
 	@RequestMapping(value="/bootstrap", method=RequestMethod.GET)

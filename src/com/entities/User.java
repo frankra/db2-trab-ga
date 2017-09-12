@@ -3,11 +3,16 @@ package com.entities;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlRootElement;
 
 import com.fasterxml.jackson.annotation.JsonView;
 
 @Entity
 @Table(name = "appuser")
+@XmlRootElement
+@XmlAccessorType(XmlAccessType.FIELD)
 public class User extends BaseEntity {
 
 	private static final long serialVersionUID = 1L;

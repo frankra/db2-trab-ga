@@ -9,6 +9,9 @@ import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlRootElement;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -19,6 +22,8 @@ import com.fasterxml.jackson.annotation.JsonView;
 
 @Entity
 @Table(name = "hgroup")
+@XmlRootElement
+@XmlAccessorType(XmlAccessType.FIELD)
 public class Group extends BaseEntity {
 	
 	/**

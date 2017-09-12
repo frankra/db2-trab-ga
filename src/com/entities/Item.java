@@ -8,6 +8,9 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlRootElement;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -15,6 +18,8 @@ import com.fasterxml.jackson.annotation.JsonView;
 
 @Entity
 @Table(name = "listitem")
+@XmlRootElement
+@XmlAccessorType(XmlAccessType.FIELD)
 public class Item extends BaseEntity {
 
 	/**
